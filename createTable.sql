@@ -25,11 +25,12 @@ CREATE TABLE IF NOT EXISTS Proxyma_corpus (
     FOREIGN KEY (group_uid) REFERENCES `Group`(uid)
 );
 
--- Création de la table Personal_resource
 CREATE TABLE IF NOT EXISTS Personal_resource (
-    uid VARCHAR(255) PRIMARY KEY,
-    type ENUM('knowledge', 'skill', 'ability'),
-    description TEXT
+    uid VARCHAR(255),
+    resource_id VARCHAR(255),
+    type TEXT,
+    description TEXT,
+    PRIMARY KEY (uid, resource_id)
 );
 
 -- Création de la table Actor
@@ -42,9 +43,10 @@ CREATE TABLE IF NOT EXISTS Actor (
 CREATE TABLE IF NOT EXISTS Actor_Personal_resource (
     actor_uid VARCHAR(255),
     personal_resource_uid VARCHAR(255),
-    PRIMARY KEY (actor_uid, personal_resource_uid),
+    personal_resource_resource_id VARCHAR(255),
+    PRIMARY KEY (actor_uid, personal_resource_uid,personal_resource_resource_id),
     FOREIGN KEY (actor_uid) REFERENCES Actor(uid),
-    FOREIGN KEY (personal_resource_uid) REFERENCES Personal_resource(uid)
+    FOREIGN KEY (personal_resource_uid,personal_resource_resource_id) REFERENCES Personal_resource(uid,resource_id)
 );
 
 -- Création de la table Objective
